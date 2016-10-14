@@ -16,11 +16,11 @@ class LookupModule(LookupBase):
             'dir':
                 (variables['deploy_helper']['new_release_path'])
                     if variables.has_key('deploy_helper') else
-                (variables['manala_deploy_dir'] + '/' +  variables['manala_deploy_current_dir']),
+                (variables['manala_deploy_dir'] + '/' +  variables['manala_deploy_structure_current_dir']),
             'shared_dir':
                 (variables['deploy_helper']['shared_path'])
                     if variables.has_key('deploy_helper') else
-                (variables['manala_deploy_dir'] + '/' +  variables['manala_deploy_shared_dir'])
+                (variables['manala_deploy_dir'] + '/' +  variables['manala_deploy_structure_shared_dir'])
         }
 
         for term in self._flatten(terms):

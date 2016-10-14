@@ -1,0 +1,25 @@
+---
+
+- name: tasks/share_file > Ensure directory file is present "{{ item.options|dirname }}"
+  file:
+    path:  "{{ (item.shared_dir ~ '/' ~ item.options)|dirname }}"
+    state: directory
+
+- name: tasks/share_file > Ensure file is present "{{ item.options }}"
+  file:
+    path:  "{{ item.shared_dir ~ '/' ~ item.options }}"
+    state: touch
+
+- name: tasks/share_file > Link "{{ item.options }}"
+  file:
+    path:  "{{ item.dir ~ '/' ~ item.options }}"
+    src:   "{{
+      (
+        item.shared_dir ~ '/' ~ item.options
+      )|relpath(
+        (
+          item.dir ~ '/' ~ item.options
+        )|dirname
+      ) }}"
+    state: link
+    force: true

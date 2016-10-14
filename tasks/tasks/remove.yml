@@ -1,0 +1,15 @@
+---
+
+- name: tasks/remove > Find "{{ item.options }}"
+  find:
+    path:     "{{ item.dir ~ '/' ~ item.options|dirname }}"
+    patterns: "{{ item.options|basename }}"
+  register: __manala_deploy_tasks_remove_find_result
+
+- name: tasks/remove > Remove "{{ item.options }}"
+  file:
+    path:  "{{ file_item.path }}"
+    state: absent
+  with_items: "{{ __manala_deploy_tasks_remove_find_result.files }}"
+  loop_control:
+    loop_var: file_item

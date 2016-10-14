@@ -3,9 +3,9 @@
 - name: tasks/symfony_assets_version > Retrieve git branch revision
   shell: git rev-parse --short HEAD
   args:
-    chdir: "{{ item.shared_dir }}/cached-copy"
+    chdir: "{{ manala_deploy_dir ~ '/' ~ manala_deploy_checkout_git_repository_dir }}"
   register: __manala_deploy_symfony_assets_version_git_revision_output
-  when: "{{ manala_deploy_strategy == 'git' }}"
+  when: "{{ manala_deploy_checkout == 'git' }}"
 
 - name: tasks/symfony_assets_version > Replace assets_version in parameters.yml
   lineinfile:
