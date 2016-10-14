@@ -1,0 +1,9 @@
+---
+
+- name: tasks/writable_dir > Ensure permissions on "{{ item.options }}"
+  file:
+    path:    "{{ item.dir ~ '/' ~ item.options }}"
+    state:   directory
+    recurse: true
+    follow:  true
+    mode:    ug=rwx,o=rx

@@ -1,35 +1,34 @@
 ---
 
-# Dirs
-manala_deploy_dir:          ~
-manala_deploy_current_dir:  current
-manala_deploy_releases_dir: releases
-manala_deploy_shared_dir:   shared
+# Dir
+manala_deploy_dir: ~
 
 # Releases
 manala_deploy_releases: 5
 
-# Strategy
-manala_deploy_strategy: git
+# Structure
+manala_deploy_structure_current_dir:  current
+manala_deploy_structure_releases_dir: releases
+manala_deploy_structure_shared_dir:   shared
 
-# Strategy - Git
-manala_deploy_strategy_git_repo:    ~
-manala_deploy_strategy_git_version: master
+# Checkout
+manala_deploy_checkout: git
 
-# Shared
-manala_deploy_shared_files: []
-manala_deploy_shared_dirs:  []
-
-# Copied
-manala_deploy_copied: []
-
-# Removed
-manala_deploy_removed: []
-
-# Writable
-manala_deploy_writable_dirs_mode: ug=rwx,o=rx
-manala_deploy_writable_dirs: []
+# Checkout - Git
+manala_deploy_checkout_git_repository_dir: repository
+manala_deploy_checkout_git_repository:     ~
+manala_deploy_checkout_git_branch:         master
 
 # Tasks
-manala_deploy_tasks:      []
+manala_deploy_tasks: []
+
+# Post tasks
 manala_deploy_post_tasks: []
+
+# Manala
+manala_deploy:
+  structure:  true
+  checkout:   true
+  tasks:      true
+  release:    true
+  post_tasks: true

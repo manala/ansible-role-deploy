@@ -1,0 +1,5 @@
+---
+
+- name: tasks/pause > Pause "{{ item.options }}" seconds
+  pause:
+    seconds: "{{ item.options }}"

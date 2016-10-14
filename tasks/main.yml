@@ -1,53 +1,55 @@
 ---
 
-# Setup
-- include: setup.yml
-  tags:
-    - manala_deploy
-    - manala_deploy.setup
-
-# Strategy
-- include: strategy.yml
-  tags:
-    - manala_deploy
-
-# Shared
-- include: shared.yml
+# Requirements
+- name: requirements
+  assert:
+    that:
+      - manala_deploy_dir
+      - manala_deploy_checkout == 'git' and manala_deploy_checkout_git_repository
+    msg: |
+      You must set "manala_deploy_dir"
+      You must set "manala_deploy_checkout_git_repository" if "manala_deploy_checkout" is "git"
+  always_run: true
   tags:
     - manala_deploy
 
-# Copied
-- include: copied.yml
+# Structure
+- include: structure.yml
+  when: "{{ manala_deploy['structure']|default(true) }}"
   tags:
     - manala_deploy
+    - manala_deploy.structure
 
-# Removed
-- include: removed.yml
+# Checkout
+- include: "checkout/{{ manala_deploy_checkout }}.yml"
+  when: "{{ manala_deploy['checkout']|default(true) }}"
   tags:
     - manala_deploy
-
-# Writable
-- include: writable.yml
-  tags:
-    - manala_deploy
+    - manala_deploy.checkout
 
 # Tasks
-- include: tasks/{{ item.task }}.yml
-  with_manala_deploy_tasks: "{{ manala_deploy_tasks }}"
-  when: "{{ item.when }}"
+- block:
+    - include: tasks/{{ item.task }}.yml
+      with_manala_deploy_tasks: "{{ manala_deploy_tasks }}"
+      when: "{{ item.when }}"
+  when: "{{ manala_deploy['tasks']|default(true) }}"
   tags:
     - manala_deploy
     - manala_deploy.tasks
 
-# Current
-- include: current.yml
+# Release
+- include: release.yml
+  when: "{{ manala_deploy['release']|default(true) }}"
   tags:
     - manala_deploy
+    - manala_deploy.release
 
 # Post tasks
-- include: tasks/{{ item.task }}.yml
-  with_manala_deploy_tasks: "{{ manala_deploy_post_tasks }}"
-  when: "{{ item.when }}"
+- block:
+    - include: tasks/{{ item.task }}.yml
+      with_manala_deploy_tasks: "{{ manala_deploy_post_tasks }}"
+      when: "{{ item.when }}"
+  when: "{{ manala_deploy['post_tasks']|default(true) }}"
   tags:
     - manala_deploy
-    - manala_deploy.tasks
+    - manala_deploy.post_tasks

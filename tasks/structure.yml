@@ -1,0 +1,10 @@
+---
+
+- name: structure
+  deploy_helper:
+    path:          "{{ manala_deploy_dir }}"
+    current_path:  "{{ manala_deploy_structure_current_dir }}"
+    releases_path: "{{ manala_deploy_structure_releases_dir }}"
+    shared_path:   "{{ manala_deploy_structure_shared_dir }}"
+    keep_releases: "{{ manala_deploy_releases }}"
+    state:         present

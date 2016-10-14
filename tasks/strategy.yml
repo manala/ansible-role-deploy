@@ -1,3 +1,0 @@
----
-
-- include: "strategy/{{ manala_deploy_strategy }}.yml"

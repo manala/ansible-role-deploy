@@ -1,0 +1,21 @@
+---
+
+- name: tasks/share_directory > Ensure directory is present "{{ item.options }}"
+  file:
+    path:   "{{ item.shared_dir ~ '/' ~ item.options }}"
+    state:  directory
+    follow: true
+
+- name: tasks/share_directory > Link "{{ item.options }}"
+  file:
+    path:  "{{ item.dir ~ '/' ~ item.options }}"
+    src:   "{{
+      (
+        item.shared_dir ~ '/' ~ item.options
+      )|relpath(
+        (
+          item.dir ~ '/' ~ item.options
+        )|dirname
+      ) }}"
+    state: link
+    force: true

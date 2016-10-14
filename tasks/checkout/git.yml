@@ -1,0 +1,19 @@
+---
+
+- name: checkout/git > Local repository
+  git:
+    repo:           "{{ manala_deploy_checkout_git_repository }}"
+    dest:           "{{ manala_deploy_dir ~ '/' ~ manala_deploy_checkout_git_repository_dir }}"
+    version:        "{{ manala_deploy_checkout_git_branch }}"
+    accept_hostkey: true
+    update:         true
+
+- name: checkout/git > Checkout
+  command: git checkout-index -f -a --prefix="{{ deploy_helper.new_release_path }}/"
+  args:
+    chdir: "{{ manala_deploy_dir ~ '/' ~ manala_deploy_checkout_git_repository_dir }}"
+
+- name: checkout/git > Touch unfinished file
+  file:
+    path:  "{{ deploy_helper.new_release_path }}/{{ deploy_helper.unfinished_filename }}"
+    state: touch
