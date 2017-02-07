@@ -1,16 +1,10 @@
 ---
 
-- name: tasks/symfony_assets_version_file > Retrieve git branch revision
-  shell: git rev-parse --short HEAD
-  args:
-    chdir: "{{ item.shared_dir }}/cached-copy"
-  register: __manala_deploy_symfony_assets_version_file_git_revision_output
-  when: "{{ manala_deploy_strategy == 'git' }}"
-
 - name: tasks/symfony_assets_version_file > Generate assets_version.yml
   copy:
     dest: "{{ item.dir }}/app/config/assets_version.yml"
     force: yes
     content: |
       parameters:
-        assets_version: {{ __manala_deploy_symfony_assets_version_file_git_revision_output.stdout }}
+        assets_version: {{ manala_deploy_strategy_git_head }}
+    when: "{{ manala_deploy_strategy_git_head }}"
