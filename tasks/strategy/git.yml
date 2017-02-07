@@ -9,7 +9,7 @@
     update:         true
 
 - name: strategy/git > Get head
-  shell: git rev-parse --short HEAD
+  command: git rev-parse --short HEAD
   args:
     chdir: "{{ deploy_helper.shared_path ~ '/cached-copy' }}"
   register: __manala_deploy_strategy_git_head_result
